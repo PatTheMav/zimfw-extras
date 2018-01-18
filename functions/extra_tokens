@@ -1,0 +1,6 @@
+# Set up ENV tokens/secrets here
+# Will be evaluated called by extras plugin automatically
+#
+# EXAMPLES:
+# export HOMEBREW_GITHUB_API_TOKEN=GITHUB_TOKEN
+# export DEFAULT_USER=USER_NAME
