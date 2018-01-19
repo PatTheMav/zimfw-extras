@@ -1,0 +1,10 @@
+#Ignore Finder metadata files
+.DS_Store
+._*
+*.zwc
+Icon*
+
+#No build directories thanks
+build
+#Ignore custom files
+functions/extra_tokens
