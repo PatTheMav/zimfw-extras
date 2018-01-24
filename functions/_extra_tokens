@@ -4,6 +4,8 @@
 # EXAMPLES:
 # export HOMEBREW_GITHUB_API_TOKEN=GITHUB_TOKEN
 # export DEFAULT_USER=USER_NAME
+# INSTALL
+# Change contents and remove underscore prefix from file name
 
 if [ -z "$ZEXT_TOKENS" ]; then
     ZEXT_TOKENS="${ZEXT_TOKENS:-1}"
