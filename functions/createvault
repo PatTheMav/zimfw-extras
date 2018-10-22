@@ -8,8 +8,9 @@ case $OSTYPE in
 
         local volume_name="${1}"
         local volume_file_name="${2}"
+        local volume_size=${3:-5MB}
 
-        hdiutil create -encryption AES-256 -size 1MB -type SPARSE -volname "${volume_name}" "${volume_file_name}" -fs APFS
+        hdiutil create -encryption AES-256 -size ${volume_size} -type SPARSE -volname "${volume_name}" "${volume_file_name}" -fs APFS
         ;;
     linux*) echo "${0} not available on Linux (yet)."; return 1 ;;
     * ) echo "${0} not available for this platform."; return 1 ;;
