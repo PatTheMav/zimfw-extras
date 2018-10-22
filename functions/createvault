@@ -1,0 +1,16 @@
+case $OSTYPE in
+    darwin*)
+        (( ${+commands[hdiutil]} )) || { echo "${0} requires hdiutil on macOS." ; return 1 }
+        if (( ${#} != 2 )); then
+          print "usage: ${0} [volume_name] [/path/to/volume.dmg]" >&2
+          return 1
+        fi
+
+        local volume_name="${1}"
+        local volume_file_name="${2}"
+
+        hdiutil create -encryption AES-256 -size 1MB -type SPARSE -volname "${volume_name}" "${volume_file_name}" -fs APFS
+        ;;
+    linux*) echo "${0} not available on Linux (yet)."; return 1 ;;
+    * ) echo "${0} not available for this platform."; return 1 ;;
+esac

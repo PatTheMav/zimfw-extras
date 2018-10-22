@@ -23,7 +23,7 @@ if (( ${+commands[curl]} )); then
     alias whatsmyip="curl -L https://ip.patthemav.com/"
 fi
 
-if (( ${+commands[brew]} )); then
+if (( ${+commands[youtube-dl]} )); then
     alias yt-dl="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4'"
 fi
 
@@ -54,16 +54,16 @@ export EDITOR='/usr/bin/vim'
 
 case $OSTYPE in
     darwin*)
-        macos_extras
+        [[ -s ${0:h}/macos_extras.zsh ]] && source ${0:h}/macos_extras.zsh
         ;;
     linux*)
-        linux_extras
+        [[ -s ${0:h}/linux_extras.zsh ]] && source ${0:h}/linux_extras.zsh
         ;;
     'AIX')     export TERM='aixterm' ;;
     * )        export TERM='vt100' ;;
 esac
 
-extra_tokens
+[[ -s ${0:h}/token_extras.zsh ]] && source ${0:h}/token_extras.zsh
 
 # export COLUMNS=160
 export LESS="--RAW-CONTROL-CHARS"
