@@ -8,4 +8,4 @@ Icon*
 #No build directories thanks
 build
 #Ignore custom files
-functions/extra_tokens
+token_extras.zsh
