@@ -28,7 +28,7 @@ if (( ${+commands[youtube-dl]} )); then
 fi
 
 if (( ${+commands[git]} )); then
-    alias grm="git rm \$(git ls-files --deleted)"
+    alias grm="git rm '\$(git ls-files --deleted)'"
 fi
 
 setopt pushdminus
