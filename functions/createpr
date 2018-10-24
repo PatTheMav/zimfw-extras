@@ -1,0 +1,8 @@
+if (( ${#} != 1 )); then
+  print "usage: ${0} [new branch name]" >&2
+  return 1
+fi
+
+git checkout master
+git pull upstream master && git push origin master
+git checkout -b ${1}
