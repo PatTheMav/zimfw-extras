@@ -31,6 +31,11 @@ if (( ${+commands[git]} )); then
     alias grm="git ls-files --deleted -z | xargs -0 git rm"
 fi
 
+if (( ${+commands[gpg]} )); then
+    alias gpgenc="env PINENTRY_USER_DATA="USE_CURSES=1" gpg -c"
+    alias gpgdec="env PINENTRY_USER_DATA="USE_CURSES=1" gpg -d"
+fi
+
 setopt pushdminus
 alias -- -='cd -'
 alias 1='cd -'
