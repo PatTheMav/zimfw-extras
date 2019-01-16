@@ -64,8 +64,11 @@ case $OSTYPE in
     linux*)
         [[ -s ${0:h}/linux_extras.zsh ]] && source ${0:h}/linux_extras.zsh
         ;;
-    'AIX')     export TERM='aixterm' ;;
-    * )        export TERM='vt100' ;;
+    msys*|mingw*|cygwin*)
+        [[ -s ${0:h}/windows_extras.zsh ]] && source ${0:h}/windows_extras.zsh
+        ;;
+    'AIX')     [[ "$TERM" == "" ]] && export TERM='aixterm' ;;
+    * )        [[ "$TERM" == "" ]] && export TERM='vt100' ;;
 esac
 
 [[ -s ${0:h}/token_extras.zsh ]] && source ${0:h}/token_extras.zsh
