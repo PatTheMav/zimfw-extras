@@ -1,3 +1,53 @@
+function {
+  emulate -L zsh
+
+  local ztermtitle
+  local ztabtitle
+
+  if [[ "${TERM_PROGRAM}" == "Apple_Terminal" ]]; then
+    zstyle -s ':zim:zimfw-extras' mactermtitle 'ztermtitle' || ztermtitle="%n@%15>..>%m%>>"
+    zstyle -s ':zim:zimfw-extras' mactabtitle 'ztabtitle' || ztabtitle=""
+  else
+    zstyle -s ':zim:zimfw-extras' termtitle 'ztermtitle' || ztermtitle="%n@%15>..>%m%>>"
+    zstyle -s ':zim:zimfw-extras' tabtitle 'ztabtitle' || ztabtitle="%15<..<%~%<<"
+  fi
+
+  case "${TERM}" in
+    cygwin|xterm*|putty*|rxvt*|ansi)
+      eval "termtitle_precmd() { print -Pn '\e]1;${ztabtitle:q}\a'; print -Pn '\e]2;${ztermtitle:q}\a' }"
+      ;;
+    screen*)
+      eval "termtitle_precmd() { print -Pn '\ek${ztabtitle:q}\e\\' }"
+      ;;
+    *)
+      if [[ "${TERM_PROGRAM}" == "iTerm.app" ]]; then
+        eval "termtitle_precmd() { print -Pn '\e]1;${ztabtitle:q}\a' print -Pn '\e]2;${ztermtitle:q}\a' }"
+      else
+        if [[ -n "$terminfo[fsl]" ]] && [[ -n "$terminfo[tsl]" ]]; then
+          eval "termtitle_precmd() { echoti tsl; print -Pn '${ztabtitle}'; echoti fsl' }"
+        fi
+      fi
+      ;;
+  esac
+
+  autoload -Uz add-zsh-hook && add-zsh-hook precmd termtitle_precmd
+  termtitle_precmd
+
+  # Apple Terminal can do this by itself, probably faster
+  if [[ "$TERM_PROGRAM" != "Apple_Terminal" ]]; then
+    termtitle_preexec() {
+      emulate -L zsh
+      setopt extended_glob
+
+      local CMD=${1[(wr)^(*=*|sudo|ssh|mosh|rake|-*)]:gs/%/%%}
+      local LINE="${2:gs/%/%%}"
+
+      zim_termtitle '${cmd}' '%100>...>${line}%<<'
+    }
+    autoload -Uz add-zsh-hook && add-zsh-hook preexec termtitle_preexec
+  fi
+}
+
 # Default aliases
 alias ducks='du -cks * | sort -rn| head -11'
 alias systail='tail -f /var/log/system.log'
@@ -76,71 +126,3 @@ esac
 # export COLUMNS=160
 export LESS="--RAW-CONTROL-CHARS"
 export LESSHISTFILE=-
-
-if ! (($+ZSH_TERM_TITLE)); then
-  if [[ "$TERM_PROGRAM" == "Apple_Terminal" ]]; then
-    ZSH_TERM_TAB=""
-    ZSH_TERM_TITLE="%n@%m%15>..>%>>"
-  else
-    ZSH_TERM_TAB="%15<..<%~%<<"
-    ZSH_TERM_TITLE="%n@%m: %~"
-  fi
-fi
-
-function title {
-  [[ "$EMACS" == *term* ]] && return
-  : ${2=$1}
-
-  case "$TERM" in
-    cygwin|xterm*|putty*|rxvt*|ansi)
-      print -Pn "\e]2;$2:q\a" # set window name
-      if [[ "$TERM_PROGRAM" != "Apple_Terminal" ]]; then # || [[ "$TERM_PROGRAM_VERSION" =~ "38.*" ]]; then
-        print -Pn "\e]1;$1:q\a" # set tab name
-      fi
-      ;;
-    screen*)
-      print -Pn "\ek$1:q\e\\" # set screen hardstatus
-      ;;
-    *)
-      if [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
-        print -Pn "\e]2;$2:q\a" # set window name
-        print -Pn "\e]1;$1:q\a" # set tab name
-      else
-        # Try to use terminfo to set the title
-        # If the feature is available set title
-        if [[ -n "$terminfo[fsl]" ]] && [[ -n "$terminfo[tsl]" ]]; then
-          echoti tsl
-          print -Pn "$1"
-          echoti fsl
-        fi
-      fi
-      ;;
-  esac
-}
-
-function termsupport_precmd {
-  if [[ "$DISABLE_AUTO_TITLE" == true ]]; then
-    return
-  fi
-
-  title $ZSH_TERM_TAB $ZSH_TERM_TITLE
-}
-
-# Runs before executing the command
-function termsupport_preexec {
-  if [[ "$DISABLE_AUTO_TITLE" == true ]]; then
-    return
-  fi
-
-  # cmd name only, or if this is sudo or ssh, the next cmd
-  local CMD=${1[(wr)^(*=*|sudo|ssh|mosh|rake|-*)]:gs/%/%%}
-  local LINE="${2:gs/%/%%}"
-
-  title '$CMD' '%100>...>$LINE%<<'
-}
-
-precmd_functions+=(termsupport_precmd)
-# Apple Terminal can do this by itself, probably faster
-if ! [[ "$TERM_PROGRAM" == "Apple_Terminal" ]]; then
-  preexec_functions+=(termsupport_preexec)
-fi

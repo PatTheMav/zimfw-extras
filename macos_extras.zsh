@@ -1,30 +1,19 @@
 if [ -z "$ZEXT_OS" ]; then
     if [[ "$TERM_PROGRAM" == "Apple_Terminal" ]] && [[ -z "$INSIDE_EMACS" ]]; then
-      function update_terminalapp_cwd() {
-        local URL_PATH=''
-        {
-            # Use LC_CTYPE=C to process text byte-by-byte. Ensure that
-            # LC_ALL isn't set, so it doesn't interfere.
-            local i ch hexch LC_CTYPE=C LC_ALL=
-            for ((i = 0; i < ${#PWD}; ++i)); do
-                ch="${PWD:$i:1}"
-                if [[ "$ch" =~ [/._~A-Za-z0-9-] ]]; then
-                    URL_PATH+="$ch"
-                else
-                    printf -v hexch "%02X" "'$ch"
-                    # printf treats values greater than 127 as
-                    # negative and pads with "FF", so truncate.
-                    URL_PATH+="%${hexch: -2:2}"
-                fi
-            done
-        }
-        printf '\e]7;%s\a' "file://$HOST$URL_PATH"
-      }
+        urlencode() {
+            emulate -L zsh
+            setopt localoptions extendedglob
 
-      # Use a precmd hook instead of a chpwd hook to avoid contaminating output
-      precmd_functions+=(update_terminalapp_cwd)
-      # Run once to get initial cwd set
-      update_terminalapp_cwd
+            input=( ${(s::)1} )
+            print "${(j::)input/(#b)([^A-Za-z0-9_.\!~*\'\(\)-\/])/%${(l:2::0:)$(([##16]#match))}}"
+        }
+
+        termtitle_macos() {
+            printf '\e]7;%s\a' "$(urlencode $(pwd))"
+        }
+
+        autoload -Uz add-zsh-hook && add-zsh-hook precmd termtitle_macos
+        termtitle_macos
     fi
 
     alias ps2='ps -facx '
