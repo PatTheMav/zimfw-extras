@@ -42,7 +42,7 @@ function {
       local CMD=${1[(wr)^(*=*|sudo|ssh|mosh|rake|-*)]:gs/%/%%}
       local LINE="${2:gs/%/%%}"
 
-      zim_termtitle '${cmd}' '%100>...>${line}%<<'
+      print -Pn '\e]1;${cmd:q}\a'; print -Pn '\e]2;${%100>...>${line}%<<:q}\a'
     }
     autoload -Uz add-zsh-hook && add-zsh-hook preexec termtitle_preexec
   fi
