@@ -1,0 +1,13 @@
+(( ${+commands[gpg]} )) || { echo "${0} requires gpg." ; return 1 }
+if (( ${#} < 1 )); then
+  print "usage: ${0} FILE [TARGET]" >&2
+  return 1
+fi
+
+SOURCE_FILE=${1}
+TARGET_FILE=${2:-"${1}.gpg"}
+
+stty -echo
+echo -n "Passphrase: "
+gpg --passphrase-fd 0 --pinentry-mode loopback --enable-progress-filter --output ${TARGET_FILE} -c ${SOURCE_FILE}
+stty echo
