@@ -9,7 +9,8 @@ if [ -z "$ZEXT_OS" ]; then
         }
 
         termtitle_macos() {
-            printf '\e]7;%s\a' "$(urlencode $(pwd))"
+            local pwd_enc=$(urlencode "$(pwd)")
+            printf '\e]7;%s\a' "file://${HOST}${pwd_enc}"
         }
 
         autoload -Uz add-zsh-hook && add-zsh-hook precmd termtitle_macos
