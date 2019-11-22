@@ -1,0 +1,10 @@
+(( ${+commands[ffmpeg]} )) || { echo "${0} requires ffmpeg." ; return 1 }
+if (( ${#} < 1 )); then
+  print "usage: ${0} FILE [TARGET]" >&2
+  return 1
+fi
+
+SOURCE_FILE=${1}
+TARGET_FILE=${2:-"$(basename "${SOURCE_FILE%.*}").mp4"}
+
+ffmpeg -f gif -i "${SOURCE_FILE}" -pix_fmt yuv420p -c:v libx264 -movflags +faststart -filter:v crop='floor(in_w/2)*2:floor(in_h/2)*2' -crf 18 "${TARGET_FILE}"
