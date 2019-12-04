@@ -5,11 +5,11 @@ function {
   local ztabtitle
 
   if [[ "${TERM_PROGRAM}" == "Apple_Terminal" ]]; then
-    zstyle -s ':zim:zimfw-extras' mactermtitle 'ztermtitle' || ztermtitle="%n@%15>..>%m%>>"
-    zstyle -s ':zim:zimfw-extras' mactabtitle 'ztabtitle' || ztabtitle=""
+    ztermtitle="%n@%15>..>%m%>>"
+    ztabtitle=""
   else
-    zstyle -s ':zim:zimfw-extras' termtitle 'ztermtitle' || ztermtitle="%n@%15>..>%m%>>"
-    zstyle -s ':zim:zimfw-extras' tabtitle 'ztabtitle' || ztabtitle="%15<..<%~%<<"
+    zstyle -s ':zim:termtitle' format 'ztermtitle' || ztermtitle="%n@%15>..>%m%>>"
+    zstyle -s ':zim:tabtitle' format 'ztabtitle' || ztabtitle="%15<..<%~%<<"
   fi
 
   case "${TERM}" in
@@ -34,7 +34,7 @@ function {
   termtitle_precmd
 
   # Apple Terminal can do this by itself, probably faster
-  if [[ "$TERM_PROGRAM" != "Apple_Terminal" ]]; then
+  if [[ "$TERM_PROGRAM" != "Apple_Terminal" ]] && [[ -z "${SSH_CONNECTION} " ]]; then
     termtitle_preexec() {
       emulate -L zsh
       setopt extended_glob
