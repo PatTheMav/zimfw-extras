@@ -66,5 +66,5 @@ case "${OSTYPE}" in
     * )        [[ "$TERM" == "" ]] && export TERM='vt100' ;;
 esac
 
-[[ -s ${0:h}/custom_aliases.zsh ]] && source ${0:h}/custom_aliases.zsh
-[[ -s ${0:h}/token_extras.zsh ]] && source ${0:h}/token_extras.zsh
+[[ -s ${0:h}/aliases.zsh ]] && source ${0:h}/aliases.zsh
+[[ -s ${0:h}/tokens.zsh ]] && source ${0:h}/tokens.zsh
