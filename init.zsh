@@ -25,6 +25,8 @@ function {
       else
         if [[ -n "$terminfo[fsl]" ]] && [[ -n "$terminfo[tsl]" ]]; then
           eval "termtitle_precmd() { echoti tsl; print -Pn '${ztabtitle}'; echoti fsl' }"
+        else
+          eval "termtitle_precmd() {}"
         fi
       fi
       ;;
