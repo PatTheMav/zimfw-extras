@@ -15,4 +15,4 @@ SOURCE_FILE=${1}
 TARGET_FILE=${2:-"$(basename "${SOURCE_FILE%.*}").mp4"}
 RESIZE_PARAMS=${3:-""}
 
-ffmpeg -i "${SOURCE_FILE}" -c:v libx264 -crf 20 -preset slow -pix_fmt yuv420p "${RESIZE_PARAMS}"-movflags +faststart -c:a "${AUDIO_ENCODER}" -b:a 256k -ac 2 "${TARGET_FILE}"
+ffmpeg -i "${SOURCE_FILE}" -c:v libx264 -crf 20 -preset slow -pix_fmt yuv420p "${RESIZE_PARAMS}"-movflags +faststart -c:a "${AUDIO_ENCODER}" -b:a 224k -ac 2 "${TARGET_FILE}"
