@@ -40,7 +40,7 @@ if [ -z "$ZEXT_ALIAS" ]; then
     fi
 
     if (( ${+commands[youtube-dl]} )); then
-        alias yt-dl="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4'"
+        alias yt-dl="youtube-dl -f 'bestvideo[vcodec^=avc1]+bestaudio[ext=m4a]/mp4'"
     fi
 
     if (( ${+commands[git]} )); then
