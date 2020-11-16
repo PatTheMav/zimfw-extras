@@ -1,4 +1,6 @@
 if [ -z "$ZEXT_OS" ]; then
+    HOMEBREW_INSTALL_BADGE="🖥 "
+
     if [[ "$TERM_PROGRAM" == "Apple_Terminal" ]] && [[ -z "$INSIDE_EMACS" ]]; then
         urlencode() {
             emulate -L zsh
@@ -26,10 +28,7 @@ if [ -z "$ZEXT_OS" ]; then
     alias flushdownloads="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
     alias listdownloads="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'select LSQuarantineDataURLString from LSQuarantineEvent' | sort"
 
-    if (( ${+commands[brew]} )); then
-        export HOMEBREW_INSTALL_BADGE="🖥 "
-        export EDITOR='/usr/local/bin/vim'
-
+    if (( ${+commands[ffmpeg]} )); then
         alias remux='gfind . -type f -name "*.mp4" -print0 | gxargs -r -0 -n2 -i ffmpeg -i {} -vcodec copy -acodec copy "../{}"'
     fi
 
