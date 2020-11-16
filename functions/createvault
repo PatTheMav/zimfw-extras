@@ -1,7 +1,7 @@
 case $OSTYPE in
     darwin*)
         (( ${+commands[hdiutil]} )) || { echo "${0} requires hdiutil on macOS." ; return 1 }
-        if (( ${#} != 2 )); then
+        if (( ${#} < 2 )); then
           print "usage: ${0} [volume_name] [/path/to/volume.dmg]" >&2
           return 1
         fi

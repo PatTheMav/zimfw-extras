@@ -1,10 +1,11 @@
 (( ${+commands[ffmpeg]} )) || { echo "${0} requires ffmpeg." ; return 1 }
 if (( ${#} < 1 )); then
-  print "usage: ${0} FILE [TARGET]" >&2
+  print "usage: ${0} FILE [TARGET] [NEW_SIZE]" >&2
   return 1
 fi
 
 SOURCE_FILE=${1}
 TARGET_FILE=${2:-"$(basename "${SOURCE_FILE%.*}").mp4"}
+RESIZE_PARAMS=${3:-" "}
 
-ffmpeg -i "${SOURCE_FILE}" -c:v libx264 -crf 18 -preset slow -pix_fmt yuv420p -movflags +faststart -c:a libfdk_aac -b:a 256k -ac 2 "${TARGET_FILE}"
+ffmpeg -i "${SOURCE_FILE}" -c:v libx264 -crf 20 -preset slow -pix_fmt yuv420p${RESIZE_PARAMS}-movflags +faststart -c:a libfdk_aac -b:a 256k -ac 2 "${TARGET_FILE}"
