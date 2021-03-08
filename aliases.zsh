@@ -1,8 +1,6 @@
 if [ -z "$ZEXT_ALIAS" ]; then
     alias ducks="du -cks * | sort -rn | head -11"
-    alias kindly="sudo"
-    alias fucking="sudo"
-    alias random="env LC_CTYPE=C LC_ALL=C tr -dc "a-zA-Z0-9-_\$\?" < /dev/urandom | head -c 24; echo"
+    alias random="env LC_CTYPE=C LC_ALL=C tr -dc "a-zA-Z0-9-_\$\?" < /dev/urandom | head -c 32; echo"
 
     setopt pushdminus
     alias -- -='cd -'

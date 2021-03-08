@@ -50,7 +50,7 @@ function {
   fi
 }
 
-export EDITOR="$(where vim | head -1)"
+export EDITOR="$(command -v vim)"
 export LESS="--RAW-CONTROL-CHARS"
 export LESSHISTFILE=-
 
