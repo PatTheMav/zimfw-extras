@@ -48,6 +48,31 @@ function {
     }
     autoload -Uz add-zsh-hook && add-zsh-hook preexec termtitle_preexec
   fi
+
+  local _mode
+  read _ _ _mode _ <<< "$(bindkey -lL main)"
+
+  if [[ "${_mode}" == "viins" ]]; then
+    function _vi-mode-cursor {
+      case "${KEYMAP}" in
+        main | viins | isearch | command) print -n $'\e[5 q' ;;
+        vicmd | visual) print -n $'\e[0 q' ;;
+        viopp) print -n $'\e[4 q' ;;
+        *) print -n $'\e[0 q' ;;
+      esac
+    }
+
+    function zle-line-init {
+      _vi-mode-cursor
+    }
+
+    function zle-keymap-select {
+      _vi-mode-cursor
+    }
+
+    zle -N zle-line-init
+    zle -N zle-keymap-select
+  fi
 }
 
 export EDITOR="$(command -v vim)"
