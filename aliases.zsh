@@ -39,5 +39,8 @@ if [ -z "$ZEXT_ALIAS" ]; then
         alias grm="git ls-files --deleted -z | xargs -0 git rm"
     fi
 
+    if (( ${+commands[bat]} )); then
+        export READNULLCMD='bat'
+    fi
     ZEXT_ALIAS="${ZEXT_ALIAS:-1}"
 fi
