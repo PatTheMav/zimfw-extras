@@ -1,4 +1,4 @@
-if [ -z "$ZEXT_ALIAS" ]; then
+if [[ -z "$ZEXT_ALIAS" ]]; then
     alias ducks="du -cks * | sort -rn | head -11"
     alias random="env LC_CTYPE=C LC_ALL=C tr -dc "a-zA-Z0-9-_\$\?" < /dev/urandom | head -c 32; echo"
 
@@ -30,11 +30,13 @@ if [ -z "$ZEXT_ALIAS" ]; then
     elif (( ${+commands[wget]} )); then
         alias whatsmyip="wget -q -O - https://ip.patthemav.com/"
     fi
+
     if (( ${+commands[youtube-dl]} )); then
         alias yt-mp4="youtube-dl -f 'bestvideo[vcodec^=avc1]+bestaudio[acodec^=mp4a]/mp4'"
         alias yt-webm="youtube-dl -f 'bestvideo[vcodec^=vp9]+bestaudio[acodec^=opus]/webm'"
         alias yt-av1="youtube-dl -f 'bestvideo[vcodec^=av01]+bestaudio[acodec^=mp4a]/mp4'"
     fi
+
     if (( ${+commands[git]} )); then
         alias grm="git ls-files --deleted -z | xargs -0 git rm"
     fi
@@ -42,5 +44,6 @@ if [ -z "$ZEXT_ALIAS" ]; then
     if (( ${+commands[bat]} )); then
         export READNULLCMD='bat'
     fi
+
     ZEXT_ALIAS="${ZEXT_ALIAS:-1}"
 fi
