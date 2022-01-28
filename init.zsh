@@ -73,6 +73,9 @@ function {
     zle -N zle-line-init
     zle -N zle-keymap-select
   fi
+
+  if (( ${+aliases[run-help]} )) unalias run-help
+  autoload -Uz run-help
 }
 
 export EDITOR="$(command -v vim)"
@@ -89,7 +92,6 @@ case "${OSTYPE}" in
     msys*|mingw*|cygwin*)
         [[ -s ${0:h}/windows_extras.zsh ]] && source ${0:h}/windows_extras.zsh
         ;;
-    'AIX')     [[ "$TERM" == "" ]] && export TERM='aixterm' ;;
     * )        [[ "$TERM" == "" ]] && export TERM='vt100' ;;
 esac
 
