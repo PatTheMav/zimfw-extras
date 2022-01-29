@@ -1,8 +1,5 @@
 if [[ -z "$ZEXT_OS" ]]; then
-    HOMEBREW_INSTALL_BADGE="🖥 "
-    HOMEBREW_AUTO_UPDATE_SECS=21600
-    HOMEBREW_INSTALL_FROM_API=1
-    HOMEBREW_VERBOSE_USING_DOTS=1
+    export HOMEBREW_INSTALL_BADGE="🖥 "
 
     if [[ "$TERM_PROGRAM" == "Apple_Terminal" ]] && [[ -z "$INSIDE_EMACS" ]] && ! typeset -f update_terminal_cwd > /dev/null; then
         urlencode() {

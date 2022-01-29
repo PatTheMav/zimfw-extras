@@ -92,6 +92,11 @@ export LESS_TERMCAP_so=$'\e[44;39;1m'       # Begins standout-mode.
 export LESS_TERMCAP_ue=$'\E[0m'             # Ends underline.
 export LESS_TERMCAP_us=$'\e[01;32m'         # Begins underline.
 
+export HOMEBREW_AUTO_UPDATE_SECS=21600
+export HOMEBREW_INSTALL_FROM_API=1
+export HOMEBREW_VERBOSE_USING_DOTS=1
+export HOMEBREW_NO_ENV_HINTS=1
+
 case "${OSTYPE}" in
     darwin*)
         [[ -s ${0:h}/macos_extras.zsh ]] && source ${0:h}/macos_extras.zsh
