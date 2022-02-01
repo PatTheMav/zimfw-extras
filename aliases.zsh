@@ -31,10 +31,10 @@ if [[ -z "$ZEXT_ALIAS" ]]; then
         alias whatsmyip="wget -q -O - https://ip.patthemav.com/"
     fi
 
-    if (( ${+commands[youtube-dl]} )); then
-        alias yt-mp4="youtube-dl -f 'bestvideo[vcodec^=avc1]+bestaudio[acodec^=mp4a]/mp4'"
-        alias yt-webm="youtube-dl -f 'bestvideo[vcodec^=vp9]+bestaudio[acodec^=opus]/webm'"
-        alias yt-av1="youtube-dl -f 'bestvideo[vcodec^=av01]+bestaudio[acodec^=mp4a]/mp4'"
+    if (( ${+commands[yt-dlp]} )); then
+        alias yt-mp4="yt-dlp -f 'bestvideo[vcodec^=avc1]+bestaudio[acodec^=mp4a]/mp4'"
+        alias yt-webm="yt-dlp -f 'bestvideo[vcodec^=vp9]+bestaudio[acodec^=opus]/webm'"
+        alias yt-av1="yt-dlp -f 'bestvideo[vcodec^=av01]+bestaudio[acodec^=mp4a]/mp4'"
     fi
 
     if (( ${+commands[git]} )); then
