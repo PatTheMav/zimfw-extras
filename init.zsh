@@ -78,28 +78,29 @@ function {
   autoload -Uz run-help
 }
 
-EDITOR="$(command -v vim)"
-LESS="--RAW-CONTROL-CHARS"
-LESSHISTFILE=-
-MANPAGER='less -s -M +Gg'
-ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+export HOMEBREW_AUTO_UPDATE_SECS=21600
+export HOMEBREW_INSTALL_FROM_API=1
+export HOMEBREW_VERBOSE_USING_DOTS=1
+export HOMEBREW_NO_ENV_HINTS=1
 
-HOMEBREW_AUTO_UPDATE_SECS=21600
-HOMEBREW_INSTALL_FROM_API=1
-HOMEBREW_VERBOSE_USING_DOTS=1
-HOMEBREW_NO_ENV_HINTS=1
+export MANPAGER='less -s -M +Gg'
+export LESS="--RAW-CONTROL-CHARS"
+export LESSHISTFILE=-
+(( ${+commands[vim]} )) && export EDITOR="${commands[vim]}"
 
 case "${OSTYPE}" in
-    darwin*)
-        [[ -s ${0:h}/macos_extras.zsh ]] && source ${0:h}/macos_extras.zsh
-        ;;
-    linux*)
-        [[ -s ${0:h}/linux_extras.zsh ]] && source ${0:h}/linux_extras.zsh
-        ;;
-    msys*|mingw*|cygwin*)
-        [[ -s ${0:h}/windows_extras.zsh ]] && source ${0:h}/windows_extras.zsh
-        ;;
-    * )        [[ "$TERM" == "" ]] && TERM='vt100' ;;
+  darwin*)
+    [[ -s ${0:h}/macos_extras.zsh ]] && source ${0:h}/macos_extras.zsh
+    ;;
+  linux*)
+    [[ -s ${0:h}/linux_extras.zsh ]] && source ${0:h}/linux_extras.zsh
+    ;;
+  msys*|mingw*|cygwin*)
+    [[ -s ${0:h}/windows_extras.zsh ]] && source ${0:h}/windows_extras.zsh
+    ;;
+  *)
+    [[ "${TERM}" == "" ]] && TERM='vt100'
+    ;;
 esac
 
 [[ -s ${0:h}/colours.zsh ]] && source ${0:h}/colours.zsh

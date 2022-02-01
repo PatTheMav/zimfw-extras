@@ -42,7 +42,7 @@ if [[ -z "$ZEXT_ALIAS" ]]; then
     fi
 
     if (( ${+commands[bat]} )); then
-        export READNULLCMD='bat'
+        READNULLCMD='bat'
     fi
 
     ZEXT_ALIAS="${ZEXT_ALIAS:-1}"
