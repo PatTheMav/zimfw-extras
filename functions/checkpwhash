@@ -1,0 +1,27 @@
+if (( ! ${+commands[sha1sum]} )) print "sha1sum required!" && return 1
+
+print -n 'Password to check: '
+local _hash=$(read -s _buffer && print -n ${_buffer} | sha1sum | cut -d ' ' -f 1; unset _buffer)
+print ''
+
+print "Hash: ${_hash} - Short hash: ${_hash:0:5}"
+
+local _return
+local _suffix
+local _count
+local -i found=0
+
+while read -r _return; do
+  IFS=':'; read -r _suffix _count <<< "${_return}"
+
+  if [[ ${_suffix:l} == ${_hash:5} ]] {
+    found=1
+    break
+  }
+done <<< "$(curl -s "https://api.pwnedpasswords.com/range/${_hash:0:5}" | tr -d '\r')"
+
+if (( found )) {
+  print -R "WARNING: ${_hash} found in HaveIbeenPwned database. Has been seen ${_count} times before."
+} else {
+  print "Password hash not found in HaveIbeenPwned database."
+}
