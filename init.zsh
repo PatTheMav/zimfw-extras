@@ -78,12 +78,18 @@ function {
   autoload -Uz run-help
 }
 
+# Hook terminal size change
+TRAPWINCH() {
+  export MANWIDTH="$((COLUMNS < 120 ? 80 : 120))"
+}
+
 export HOMEBREW_AUTO_UPDATE_SECS=21600
 export HOMEBREW_INSTALL_FROM_API=1
 export HOMEBREW_VERBOSE_USING_DOTS=1
 export HOMEBREW_NO_ENV_HINTS=1
 
 export MANPAGER='less -s -M +Gg'
+export MANWIDTH="$((COLUMNS < 120 ? 80 : 120))"
 export LESS="--RAW-CONTROL-CHARS"
 export LESSHISTFILE=-
 (( ${+commands[vim]} )) && export EDITOR="${commands[vim]}"
