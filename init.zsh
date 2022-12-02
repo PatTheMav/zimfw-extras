@@ -16,7 +16,7 @@ function {
     cygwin|xterm*|putty*|rxvt*|ansi)
       eval "termtitle_precmd() { print -Pn '\e]1;${ztabtitle:q}\a'; print -Pn '\e]2;${ztermtitle:q}\a' }"
       ;;
-    screen*)
+    screen*|tmux*)
       eval "termtitle_precmd() { print -Pn '\ek${ztabtitle:q}\e\\' }"
       ;;
     *)
