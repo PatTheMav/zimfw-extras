@@ -1,3 +1,5 @@
+[[ -f ~/.base16_theme ]] && source ~/.base16_theme
+
 if (( ${+BASE16_THEME} )) {
     HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="bg=18,fg=16,bold"
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=18"
