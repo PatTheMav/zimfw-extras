@@ -1,0 +1,39 @@
+local -A dependencies=(
+  gh 'GitHub CLI (%Bgh%b)'
+  jq 'jq JSON processor (%Bjq%b)'
+)
+
+for dependency description (${(@kv)dependencies}) {
+  (( ${+commands[${dependency}]} )) || {
+    print -u2 -PR "%F{1} ✖︎ ${0} requires ${description}%f"
+    return 1
+  }
+}
+
+local repository
+if [[ ${1} == (-R|--repository) ]] {
+  if [[ ${2} ]] {
+    repository="-R ${2}"
+  } else {
+    print -PR "Usage: ${0} [-R|--repository <repository>]"
+    return 1
+  }
+}
+
+local workflows=$(gh run list ${repository} --json workflowDatabaseId --jq '.[] | .workflowDatabaseId')
+local workflow_id
+local runs
+local run
+local run_id
+local name
+local start_time
+
+for workflow_id (${(f)workflows}) {
+  runs=$(gh run list ${repository} --workflow ${workflow_id} --json databaseId,startedAt,name --jq '.[] | "\(.databaseId);\(.startedAt);\(.name)"')
+
+  for run (${(f)runs}) {
+    IFS=";" read -r run_id start_time name <<< "${run}"
+    print -PR "Deleting (%B${start_time}%b) - ${name}"
+    gh run delete ${repository} ${run_id}
+  }
+}
