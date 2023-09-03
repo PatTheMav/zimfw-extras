@@ -24,9 +24,6 @@ if [[ -z "$ZEXT_OS" ]]; then
     alias af='ps -af'
     alias top='top -o cpu'
     alias listeners='sudo lsof -iTCP -sTCP:LISTEN'
-    alias flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
-    alias flushdownloads="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
-    alias listdownloads="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'select LSQuarantineDataURLString from LSQuarantineEvent' | sort"
 
     ZEXT_OS="${ZEXT_OS:-1}"
 fi
