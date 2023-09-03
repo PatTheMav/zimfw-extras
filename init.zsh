@@ -90,7 +90,7 @@ export HOMEBREW_NO_ENV_HINTS=1
 
 export MANPAGER='less -s -M +Gg'
 export MANWIDTH="$((COLUMNS < 120 ? 80 : 120))"
-export LESS="--RAW-CONTROL-CHARS"
+export LESS="-F -I -R"
 export LESSHISTFILE=-
 (( ${+commands[vim]} )) && export EDITOR="${commands[vim]}"
 
