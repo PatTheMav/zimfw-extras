@@ -7,5 +7,4 @@ fi
 SOURCE_FILE=${1}
 TARGET_FILE=${2:-"${1}.enc"}
 
-#openssl enc -aes-256-cbc -salt -pbkdf2 -iter 20000 -md sha512 -in ${SOURCE_FILE} -out ${TARGET_FILE}
-openssl enc -aes-256-cbc -salt -md sha512 -in ${SOURCE_FILE} -out ${TARGET_FILE}
+openssl enc -aes-256-cbc -salt -pbkdf2 -md sha512 -in ${SOURCE_FILE} -out ${TARGET_FILE}
