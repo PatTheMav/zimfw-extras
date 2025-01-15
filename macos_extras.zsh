@@ -3,10 +3,28 @@ if [[ -z "$ZEXT_OS" ]]; then
 
     if [[ "$TERM_PROGRAM" == "Apple_Terminal" ]] && [[ -z "$INSIDE_EMACS" ]] {
         termtitle_macos() {
-            setopt localoptions extendedglob
+            setopt localoptions
 
-            local -a input=(${(s::)${PWD}})
-            local pwd_encoded="${(j::)input/(#b)([^A-Za-z0-9_.\!~*\'\(\)-\/])/%${(l:2::0:)$(([##16]#match))}}"
+            local pwd_encoded=''
+            {
+                local -i i=1
+                local ch=''
+                local hexch=''
+                local LC_TYPE='C'
+                local LC_COLLATE='C'
+                local LC_ALL=''
+                local LANG=''
+
+                for (( i = 1; i <= ${#PWD}; ++i )) {
+                    ch="${PWD[${i}]}"
+                    if [[ "${ch}" =~ [/._~A-Za-z0-9-] ]] {
+                        pwd_encoded+="${ch}"
+                    } else {
+                        printf -v hexch "%02X" "'${ch}"
+                        pwd_encoded+="%${hexch}"
+                    }
+                }
+            }
 
             printf '\e]7;%s\a' "file://${HOST}${pwd_encoded}"
         }
