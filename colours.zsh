@@ -6,7 +6,6 @@ if (( ${+BASE16_THEME} )) {
     #typeset -A ZSH_HIGHLIGHT_STYLES
     #ZSH_HIGHLIGHT_STYLES[comment]='fg=18'
     export BAT_THEME='base16-256'
-    alias bat='bat --theme="base16-256"'
 } else {
     HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="bg=10,fg=9,bold"
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=10"

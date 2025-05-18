@@ -88,11 +88,16 @@ TRAPWINCH() {
 export HOMEBREW_VERBOSE_USING_DOTS=1
 export HOMEBREW_NO_ENV_HINTS=1
 
-export MANPAGER='less -s -M +Gg'
+if (( ${+commands[bat]} )) {
+  export MANPAGER="sh -c 'col -bx | bat -l man -p --pager=\"less -s -M +Gg\"'"
+} else {
+  export MANPAGER='less -s -M +Gg'
+}
 export MANWIDTH="$((COLUMNS < 120 ? 80 : 120))"
 export LESS="-F -I -R"
 export LESSHISTFILE=-
-(( ${+commands[vim]} )) && export EDITOR="${commands[vim]}"
+
+if (( ${+commands[vim]} )) export EDITOR="${commands[vim]}"
 
 case "${OSTYPE}" in
   darwin*)
