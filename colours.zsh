@@ -1,16 +1,16 @@
-[[ -f ~/.base16_theme ]] && source ~/.base16_theme
+if [[ -f ~/.base16_theme ]] source ~/.base16_theme
 
 if (( ${+BASE16_THEME} )) {
     HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="bg=18,fg=16,bold"
-    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=18"
-    #typeset -A ZSH_HIGHLIGHT_STYLES
-    #ZSH_HIGHLIGHT_STYLES[comment]='fg=18'
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=59"
     export BAT_THEME='base16-256'
+} elif [[ ${COLORTERM} = *(24bit|truecolor)* ]] {
+    HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="bg=#4A5560,fg=#F9AE58,bold"
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=59"
+    export BAT_THEME='mariana'
 } else {
     HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="bg=10,fg=9,bold"
-    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=10"
-    #typeset -A ZSH_HIGHLIGHT_STYLES
-    #ZSH_HIGHLIGHT_STYLES[comment]='fg=10'
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=59"
     export BAT_THEME='base16'
 }
 
