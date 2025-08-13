@@ -47,5 +47,11 @@ if [[ -z "$ZEXT_OS" ]]; then
     alias top='top -o cpu'
     alias listeners='sudo lsof -iTCP -sTCP:LISTEN'
 
+    if (( ${+commands[bat]} )) {
+      export MANPAGER="sh -c 'col -bx | bat -l man -p --pager=\"less -s -M +Gg\"'"
+    } else {
+      export MANPAGER='less -s -M +Gg'
+    }
+
     ZEXT_OS="${ZEXT_OS:-1}"
 fi
