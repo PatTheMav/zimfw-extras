@@ -45,5 +45,17 @@ if [[ -z "$ZEXT_ALIAS" ]]; then
         READNULLCMD='bat'
     fi
 
+    if (( ${+commands[eza]} )) {
+        alias ls='eza --group-directories-first --icons --links'
+        alias ll='ls --long'
+        alias l='ll --almost-all'
+        alias lm="l | ${PAGER}"
+        alias lk='ll --sort=size'
+        alias lt='ll --sort=modified'
+        alias lr='ll --tree'
+        alias lx='ll --sort=extension'
+        alias lc='ll --sort=changed'
+    }
+
     ZEXT_ALIAS="${ZEXT_ALIAS:-1}"
 fi
